@@ -1,6 +1,14 @@
 require 'csv'
 
+5.times do
+  League.create(name: "Team " + Faker::RickAndMorty.character)
+end
 
+League.all.each do |league|
+  10.times do
+    EventLeagueJoins.create(league_id: league.id, event_id: rand(1..95))
+  end
+end
 csv_text = File.read('weighins.csv')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 people = []
@@ -30,5 +38,5 @@ csv.each do |row|
 end
 
 Person.all.each do |x|
-  x.starting_weight = x.checkins.first.weight
+  x.update(starting_weight: x.checkins.first.weight, league_id: rand(1..5))
 end

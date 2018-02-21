@@ -1,0 +1,19 @@
+%h2
+  #{@league.name}
+%h3 Events
+- @league.events.each_with_index do |event, index|
+  %h4= event.name
+  - event.people.each_with_index do |person, index|
+    %table
+      -if @league.people.exists?(id: person.id)
+        %tr
+          %td{class: 'ordinal'}= index
+          %td{class: "text-left"}=link_to(person.name, person_path(person.id))
+
+%br
+%br
+%br
+%br
+%br
+%h3
+  %a= link_to('< Back', people_path, class: 'btn btn-default btn-block navbar navbar-fixed-bottom')
